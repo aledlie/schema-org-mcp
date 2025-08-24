@@ -80,11 +80,14 @@ export class SchemaOrgClient {
     const queryLower = query.toLowerCase();
 
     for (const [key, value] of this.schemaData.entries()) {
-      if (!value['@type'] || !Array.isArray(value['@type'])) continue;
-      if (!value['@type'].includes('rdfs:Class')) continue;
+      if (!value['@type']) continue;
+      
+      // Check if this is a class (handle both string and array @type)
+      const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+      if (!types.includes('rdfs:Class')) continue;
 
-      const label = value['rdfs:label']?.toLowerCase() || '';
-      const comment = value['rdfs:comment']?.toLowerCase() || '';
+      const label = (typeof value['rdfs:label'] === 'string' ? value['rdfs:label'] : '').toLowerCase();
+      const comment = (typeof value['rdfs:comment'] === 'string' ? value['rdfs:comment'] : '').toLowerCase();
 
       if (label.includes(queryLower) || comment.includes(queryLower)) {
         results.push({
@@ -217,8 +220,11 @@ export class SchemaOrgClient {
     const subTypes: any[] = [];
 
     for (const [key, value] of this.schemaData.entries()) {
-      if (!value['@type'] || !Array.isArray(value['@type'])) continue;
-      if (!value['@type'].includes('rdfs:Class')) continue;
+      if (!value['@type']) continue;
+      
+      // Check if this is a class (handle both string and array @type)
+      const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+      if (!types.includes('rdfs:Class')) continue;
 
       const superClasses = this.normalizeToArray(value['rdfs:subClassOf']);
       if (superClasses.some((sc: any) => sc['@id'] === typeId)) {
