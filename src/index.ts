@@ -133,7 +133,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   try {
     switch (name) {
       case 'get_schema_type': {
-        const result = await schemaClient.getSchemaType(toolArgs.typeName as string);
+        if (typeof toolArgs.typeName !== 'string') {
+          throw new McpError(
+            ErrorCode.InvalidRequest,
+            'typeName must be a string'
+          );
+        }
+        const result = await schemaClient.getSchemaType(toolArgs.typeName);
         return {
           content: [
             {
@@ -145,10 +151,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       case 'search_schemas': {
-        const result = await schemaClient.searchSchemas(
-          toolArgs.query as string,
-          toolArgs.limit as number
-        );
+        if (typeof toolArgs.query !== 'string') {
+          throw new McpError(
+            ErrorCode.InvalidRequest,
+            'query must be a string'
+          );
+        }
+        const limit = toolArgs.limit !== undefined ? 
+          (typeof toolArgs.limit === 'number' ? toolArgs.limit : 10) : 10;
+        const result = await schemaClient.searchSchemas(toolArgs.query, limit);
         return {
           content: [
             {
@@ -160,7 +171,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       case 'get_type_hierarchy': {
-        const result = await schemaClient.getTypeHierarchy(toolArgs.typeName as string);
+        if (typeof toolArgs.typeName !== 'string') {
+          throw new McpError(
+            ErrorCode.InvalidRequest,
+            'typeName must be a string'
+          );
+        }
+        const result = await schemaClient.getTypeHierarchy(toolArgs.typeName);
         return {
           content: [
             {
@@ -172,10 +189,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       case 'get_type_properties': {
-        const result = await schemaClient.getTypeProperties(
-          toolArgs.typeName as string,
-          toolArgs.includeInherited !== false
-        );
+        if (typeof toolArgs.typeName !== 'string') {
+          throw new McpError(
+            ErrorCode.InvalidRequest,
+            'typeName must be a string'
+          );
+        }
+        const includeInherited = toolArgs.includeInherited !== false;
+        const result = await schemaClient.getTypeProperties(toolArgs.typeName, includeInherited);
         return {
           content: [
             {
@@ -187,10 +208,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       case 'generate_example': {
-        const result = await schemaClient.generateExample(
-          toolArgs.typeName as string,
-          toolArgs.properties as Record<string, any>
-        );
+        if (typeof toolArgs.typeName !== 'string') {
+          throw new McpError(
+            ErrorCode.InvalidRequest,
+            'typeName must be a string'
+          );
+        }
+        const properties = toolArgs.properties && typeof toolArgs.properties === 'object' 
+          ? toolArgs.properties as Record<string, any>
+          : undefined;
+        const result = await schemaClient.generateExample(toolArgs.typeName, properties);
         return {
           content: [
             {

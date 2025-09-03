@@ -28,32 +28,48 @@ export class SchemaOrgClient {
 
     try {
       console.error('Fetching schema.org data...');
-      const response = await axios.get(this.SCHEMA_URL);
+      const response = await axios.get(this.SCHEMA_URL, { timeout: 30000 });
+      
+      if (!response.data) {
+        throw new Error('No data received from schema.org');
+      }
+      
       const data = response.data;
 
       // Index all types and properties by their @id
-      if (data['@graph']) {
+      if (data['@graph'] && Array.isArray(data['@graph'])) {
         for (const item of data['@graph']) {
-          if (item['@id']) {
+          if (item && typeof item === 'object' && item['@id']) {
             this.schemaData.set(item['@id'], item);
             // Also index by label for easier lookup
-            if (item['rdfs:label']) {
+            if (typeof item['rdfs:label'] === 'string') {
               this.schemaData.set(`schema:${item['rdfs:label']}`, item);
             }
           }
         }
+      } else {
+        throw new Error('Invalid schema.org data format: missing @graph array');
+      }
+
+      if (this.schemaData.size === 0) {
+        throw new Error('No schema data was loaded');
       }
 
       this.initialized = true;
-      console.error('Schema.org data loaded successfully');
+      console.error(`Schema.org data loaded successfully (${this.schemaData.size} entries)`);
     } catch (error) {
       console.error('Error loading schema.org data:', error);
-      throw error;
+      this.initialized = false;
+      throw new Error(`Failed to initialize schema.org client: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   async getSchemaType(typeName: string): Promise<any> {
     await this.initialize();
+
+    if (!typeName || typeof typeName !== 'string') {
+      throw new Error('Type name must be a non-empty string');
+    }
 
     const typeId = typeName.startsWith('schema:') ? typeName : `schema:${typeName}`;
     const type = this.schemaData.get(typeId);
@@ -64,48 +80,60 @@ export class SchemaOrgClient {
 
     // Clean up the response
     return {
-      name: type['rdfs:label'] || typeName,
-      description: type['rdfs:comment'] || 'No description available',
+      name: typeof type['rdfs:label'] === 'string' ? type['rdfs:label'] : typeName,
+      description: typeof type['rdfs:comment'] === 'string' ? type['rdfs:comment'] : 'No description available',
       id: type['@id'],
       type: type['@type'],
       superTypes: this.extractSuperTypes(type),
-      url: `https://schema.org/${type['rdfs:label'] || typeName}`,
+      url: `https://schema.org/${typeof type['rdfs:label'] === 'string' ? type['rdfs:label'] : typeName}`,
     };
   }
 
   async searchSchemas(query: string, limit: number = 10): Promise<any[]> {
     await this.initialize();
 
+    if (!query || typeof query !== 'string') {
+      throw new Error('Query must be a non-empty string');
+    }
+
+    const normalizedLimit = Math.max(1, Math.min(limit || 10, 100)); // Clamp between 1-100
     const results: any[] = [];
-    const queryLower = query.toLowerCase();
+    const queryLower = query.toLowerCase().trim();
+
+    if (queryLower.length === 0) {
+      throw new Error('Query cannot be empty');
+    }
 
     for (const [key, value] of this.schemaData.entries()) {
-      if (!value['@type']) continue;
+      if (!value || typeof value !== 'object' || !value['@type']) continue;
       
       // Check if this is a class (handle both string and array @type)
       const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
       if (!types.includes('rdfs:Class')) continue;
 
-      const label = (typeof value['rdfs:label'] === 'string' ? value['rdfs:label'] : '').toLowerCase();
-      const comment = (typeof value['rdfs:comment'] === 'string' ? value['rdfs:comment'] : '').toLowerCase();
+      const label = typeof value['rdfs:label'] === 'string' ? value['rdfs:label'] : '';
+      const comment = typeof value['rdfs:comment'] === 'string' ? value['rdfs:comment'] : '';
+      
+      const labelLower = label.toLowerCase();
+      const commentLower = comment.toLowerCase();
 
-      if (label.includes(queryLower) || comment.includes(queryLower)) {
+      if (labelLower.includes(queryLower) || commentLower.includes(queryLower)) {
         results.push({
-          name: value['rdfs:label'],
-          description: value['rdfs:comment'] || 'No description available',
+          name: label,
+          description: comment || 'No description available',
           id: value['@id'],
-          url: `https://schema.org/${value['rdfs:label']}`,
-          relevance: label.includes(queryLower) ? 2 : 1,
+          url: `https://schema.org/${label}`,
+          relevance: labelLower.includes(queryLower) ? 2 : 1,
         });
       }
 
-      if (results.length >= limit * 2) break; // Get more to sort by relevance
+      if (results.length >= normalizedLimit * 2) break; // Get more to sort by relevance
     }
 
     // Sort by relevance and limit
     return results
       .sort((a, b) => b.relevance - a.relevance)
-      .slice(0, limit)
+      .slice(0, normalizedLimit)
       .map(({ relevance, ...rest }) => rest);
   }
 
@@ -253,11 +281,15 @@ export class SchemaOrgClient {
   }
 
   private generateExampleValue(property: any): any {
+    if (!property || !property.expectedTypes || !Array.isArray(property.expectedTypes) || property.expectedTypes.length === 0) {
+      return `Example ${property?.name || 'value'}`;
+    }
+    
     const type = property.expectedTypes[0];
     
     switch (type) {
       case 'Text':
-        return `Example ${property.name}`;
+        return `Example ${property.name || 'text'}`;
       case 'URL':
         return 'https://example.com';
       case 'Date':
@@ -276,7 +308,7 @@ export class SchemaOrgClient {
           contentUrl: 'https://example.com/image.jpg',
         };
       default:
-        return `Example ${property.name}`;
+        return `Example ${property.name || 'value'}`;
     }
   }
 
