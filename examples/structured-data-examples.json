@@ -1,0 +1,177 @@
+{
+  "softwareApplication": {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "schema-org-mcp",
+    "version": "0.1.0",
+    "description": "MCP server for schema.org vocabulary",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform",
+    "programmingLanguage": "TypeScript",
+    "runtimePlatform": "Node.js",
+    "codeRepository": "https://github.com/yourusername/schema-org-mcp",
+    "license": "MIT",
+    "author": {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Developer"
+    },
+    "potentialAction": [
+      {
+        "@context": "https://schema.org",
+        "@type": "SearchAction",
+        "name": "search_schemas",
+        "description": "Search for schema.org types by keyword",
+        "target": {
+          "@context": "https://schema.org",
+          "@type": "EntryPoint",
+          "name": "Schema Search API",
+          "actionPlatform": ["MCP"]
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CreateAction",
+        "name": "generate_example",
+        "description": "Generate example JSON-LD for schema types",
+        "target": {
+          "@context": "https://schema.org",
+          "@type": "EntryPoint",
+          "name": "Example Generation API",
+          "actionPlatform": ["MCP"]
+        }
+      }
+    ]
+  },
+  
+  "sourceCode": {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Schema.org MCP Server Source",
+    "description": "Source code for the Model Context Protocol server providing schema.org vocabulary access",
+    "codeRepository": "https://github.com/yourusername/schema-org-mcp",
+    "programmingLanguage": "TypeScript",
+    "runtimePlatform": "Node.js",
+    "license": "MIT",
+    "author": {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Developer"
+    }
+  },
+
+  "webAPI": {
+    "@context": "https://schema.org",
+    "@type": "WebAPI",
+    "name": "Schema.org MCP API",
+    "description": "Model Context Protocol API for schema.org vocabulary access",
+    "documentation": "https://github.com/yourusername/schema-org-mcp#readme",
+    "serviceType": "Model Context Protocol",
+    "potentialAction": [
+      {
+        "@context": "https://schema.org",
+        "@type": "SearchAction",
+        "name": "search_schemas",
+        "description": "Search schema.org types by keyword"
+      },
+      {
+        "@context": "https://schema.org", 
+        "@type": "ViewAction",
+        "name": "get_schema_type",
+        "description": "Get detailed schema.org type information"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "CreateAction",
+        "name": "generate_example", 
+        "description": "Generate JSON-LD examples"
+      }
+    ]
+  },
+
+  "dataset": {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Schema.org Vocabulary",
+    "description": "Complete schema.org vocabulary in JSON-LD format",
+    "keywords": ["schema.org", "structured-data", "json-ld", "vocabulary", "semantic-web"],
+    "license": "CC BY-SA 3.0",
+    "creator": {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Schema.org Community",
+      "url": "https://schema.org"
+    },
+    "url": "https://schema.org/version/latest/schemaorg-current-https.jsonld",
+    "distribution": [
+      {
+        "@context": "https://schema.org",
+        "@type": "DataDownload",
+        "name": "Schema.org JSON-LD",
+        "contentUrl": "https://schema.org/version/latest/schemaorg-current-https.jsonld",
+        "encodingFormat": "application/ld+json"
+      }
+    ]
+  },
+
+  "searchActionExample": {
+    "@context": "https://schema.org",
+    "@type": "SearchAction",
+    "query": "person",
+    "target": {
+      "@context": "https://schema.org",
+      "@type": "EntryPoint",
+      "name": "Schema.org Search",
+      "actionPlatform": ["MCP"]
+    },
+    "actionStatus": "CompletedActionStatus",
+    "result": {
+      "@context": "https://schema.org",
+      "@type": "SearchResultsPage",
+      "mainEntity": [
+        {
+          "@context": "https://schema.org",
+          "@type": "Thing",
+          "name": "Person",
+          "description": "A person (alive, dead, undead, or fictional).",
+          "url": "https://schema.org/Person"
+        }
+      ],
+      "numberOfItems": 1
+    }
+  },
+
+  "createActionExample": {
+    "@context": "https://schema.org",
+    "@type": "CreateAction",
+    "object": {
+      "@context": "https://schema.org",
+      "@type": "Thing",
+      "name": "Person",
+      "description": "Schema.org Person type"
+    },
+    "result": {
+      "@context": "https://schema.org",
+      "@type": "CreativeWork",
+      "name": "Person JSON-LD Example",
+      "description": "Generated JSON-LD example for Person",
+      "encodingFormat": "application/ld+json",
+      "text": "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Person\",\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\"\n}"
+    },
+    "actionStatus": "CompletedActionStatus"
+  },
+
+  "project": {
+    "@context": "https://schema.org",
+    "@type": "Project",
+    "name": "Schema.org MCP Server",
+    "description": "A Model Context Protocol server providing access to the complete schema.org vocabulary",
+    "url": "https://github.com/yourusername/schema-org-mcp",
+    "result": {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "schema-org-mcp",
+      "applicationCategory": "DeveloperApplication"
+    }
+  }
+}

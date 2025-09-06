@@ -14,15 +14,39 @@
     "mcp",
     "schema.org",
     "structured-data",
-    "json-ld"
+    "json-ld",
+    "model-context-protocol",
+    "semantic-web",
+    "vocabulary",
+    "metadata"
   ],
-  "author": "",
+  "author": {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Developer",
+    "email": "developer@example.com"
+  },
   "license": "MIT",
+  "repository": {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "type": "git",
+    "url": "https://github.com/yourusername/schema-org-mcp.git"
+  },
+  "schemaOrgMetadata": {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform",
+    "programmingLanguage": "TypeScript",
+    "runtimePlatform": "Node.js"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.5.0",
     "@wonderwhy-er/desktop-commander": "^0.2.3",
     "axios": "^1.6.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^21.11.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",

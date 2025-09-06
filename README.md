@@ -4,11 +4,19 @@ An MCP (Model Context Protocol) server that provides access to schema.org vocabu
 
 ## Features
 
+### Schema.org Core Features
 - **Get Schema Type**: Retrieve detailed information about any schema.org type
 - **Search Schemas**: Search for schema types by keyword
 - **Type Hierarchy**: Explore inheritance relationships between types
 - **Type Properties**: List all properties available for a type (including inherited)
 - **Generate Examples**: Create example JSON-LD for any schema type
+
+### Performance Testing Integration
+- **Run Performance Tests**: Execute Core Web Vitals, Load, Stress, Soak, and Scalability tests
+- **Schema Impact Analysis**: Analyze the impact of schema.org implementation on SEO, LLM, and performance
+- **Before/After Comparisons**: Compare website performance before and after schema.org changes
+- **Comprehensive Test Suites**: Run complete performance test suites (quick, comprehensive, endurance)
+- **Structured Reports**: Generate schema.org-marked performance reports
 
 ## Installation
 
@@ -94,6 +102,48 @@ Generate an example JSON-LD for a type.
     "name": "Chocolate Chip Cookies",
     "prepTime": "PT20M"
   }
+}
+```
+
+#### 6. run_performance_test
+Run a performance test on a website URL.
+
+```json
+{
+  "url": "https://example.com",
+  "testType": "core-web-vitals",
+  "options": {
+    "iterations": 5
+  }
+}
+```
+
+#### 7. run_comprehensive_test_suite
+Run a comprehensive performance test suite.
+
+```json
+{
+  "url": "https://example.com",
+  "suiteType": "comprehensive"
+}
+```
+
+#### 8. compare_performance_results
+Compare two performance test results.
+
+```json
+{
+  "beforeResult": { ... },
+  "afterResult": { ... }
+}
+```
+
+#### 9. analyze_schema_impact
+Analyze the impact of schema.org implementation.
+
+```json
+{
+  "url": "https://example.com"
 }
 ```
 
