@@ -1,0 +1,166 @@
+{
+  "testSuite": "Load Testing",
+  "version": "1.0.0",
+  "status": "SUCCESS",
+  "timestamp": "2025-10-15T03:16:55.873Z",
+  "testConfiguration": {
+    "targetUrl": "https://www.austininspiredmovement.com/",
+    "maxConcurrentUsers": 25,
+    "rampUpDuration": 60,
+    "testDuration": 60,
+    "actualDuration": 61
+  },
+  "requestStatistics": {
+    "total": 678,
+    "successful": 678,
+    "failed": 0,
+    "successRate": "100.00%",
+    "errorRate": "0.00%"
+  },
+  "performanceMetrics": {
+    "averageResponseTime": 74,
+    "medianResponseTime": 62,
+    "p95ResponseTime": 120,
+    "p99ResponseTime": 342,
+    "minResponseTime": 49,
+    "maxResponseTime": 459,
+    "requestsPerSecond": 11.3,
+    "peakRPS": 22
+  },
+  "errorAnalysis": {
+    "totalErrors": 0,
+    "errorsByType": {},
+    "errorsByStatusCode": {},
+    "mostCommonError": "None",
+    "errorRate": 0
+  },
+  "loadPatterns": {
+    "timeSlices": [
+      {
+        "startTime": "2025-10-15T03:15:57.246Z",
+        "duration": 30,
+        "requests": 189,
+        "successfulRequests": 189,
+        "failedRequests": 0,
+        "averageResponseTime": 97,
+        "requestsPerSecond": 6.3
+      },
+      {
+        "startTime": "2025-10-15T03:16:27.246Z",
+        "duration": 30,
+        "requests": 489,
+        "successfulRequests": 489,
+        "failedRequests": 0,
+        "averageResponseTime": 65,
+        "requestsPerSecond": 16.3
+      }
+    ],
+    "patterns": {
+      "peakLoad": 16.3,
+      "averageLoad": 11.3,
+      "loadVariation": 0.44247787610619477
+    }
+  },
+  "recommendations": [
+    {
+      "category": "Optimization",
+      "priority": "LOW",
+      "issue": "System performing well under current load",
+      "impact": "Opportunity for further optimization",
+      "solutions": [
+        "Consider stress testing with higher load levels",
+        "Implement monitoring and alerting for production",
+        "Document current performance benchmarks",
+        "Plan capacity for future growth",
+        "Consider implementing auto-scaling policies"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "timestamp": 1760498159812,
+      "activeUsers": 2,
+      "totalRequests": 2,
+      "totalErrors": 0,
+      "requestsPerSecond": 0
+    },
+    {
+      "timestamp": 1760498164813,
+      "activeUsers": 4,
+      "totalRequests": 16,
+      "totalErrors": 0,
+      "requestsPerSecond": 4
+    },
+    {
+      "timestamp": 1760498169814,
+      "activeUsers": 6,
+      "totalRequests": 36,
+      "totalErrors": 0,
+      "requestsPerSecond": 6
+    },
+    {
+      "timestamp": 1760498174814,
+      "activeUsers": 8,
+      "totalRequests": 69,
+      "totalErrors": 0,
+      "requestsPerSecond": 7
+    },
+    {
+      "timestamp": 1760498179815,
+      "activeUsers": 10,
+      "totalRequests": 108,
+      "totalErrors": 0,
+      "requestsPerSecond": 7
+    },
+    {
+      "timestamp": 1760498184815,
+      "activeUsers": 12,
+      "totalRequests": 159,
+      "totalErrors": 0,
+      "requestsPerSecond": 8
+    },
+    {
+      "timestamp": 1760498189815,
+      "activeUsers": 14,
+      "totalRequests": 221,
+      "totalErrors": 0,
+      "requestsPerSecond": 12
+    },
+    {
+      "timestamp": 1760498194816,
+      "activeUsers": 16,
+      "totalRequests": 294,
+      "totalErrors": 0,
+      "requestsPerSecond": 16
+    },
+    {
+      "timestamp": 1760498199818,
+      "activeUsers": 18,
+      "totalRequests": 373,
+      "totalErrors": 0,
+      "requestsPerSecond": 13
+    },
+    {
+      "timestamp": 1760498204819,
+      "activeUsers": 20,
+      "totalRequests": 463,
+      "totalErrors": 0,
+      "requestsPerSecond": 17
+    },
+    {
+      "timestamp": 1760498209820,
+      "activeUsers": 22,
+      "totalRequests": 566,
+      "totalErrors": 0,
+      "requestsPerSecond": 22
+    },
+    {
+      "timestamp": 1760498214822,
+      "activeUsers": 24,
+      "totalRequests": 675,
+      "totalErrors": 0,
+      "requestsPerSecond": 18
+    }
+  ],
+  "overallScore": 100
+}

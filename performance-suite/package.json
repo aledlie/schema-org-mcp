@@ -32,9 +32,6 @@
     "axios": "^1.6.0",
     "puppeteer": "^21.0.0"
   },
-  "devDependencies": {
-    "jq": "^1.7.3"
-  },
   "engines": {
     "node": ">=14.0.0"
   },

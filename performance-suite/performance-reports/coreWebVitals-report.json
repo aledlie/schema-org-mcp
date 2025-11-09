@@ -1,0 +1,147 @@
+{
+  "testSuite": "Core Web Vitals",
+  "version": "1.0.0",
+  "status": "SUCCESS",
+  "timestamp": "2025-10-15T03:15:51.217Z",
+  "testConfig": {
+    "url": "https://www.austininspiredmovement.com/",
+    "iterations": 5,
+    "validMeasurements": 5
+  },
+  "coreWebVitals": {
+    "lcp": {
+      "name": "LCP",
+      "average": 1362.12,
+      "median": 1185,
+      "p75": 1487.2,
+      "min": 979.8,
+      "max": 2076.9,
+      "score": 94,
+      "rating": "GOOD",
+      "passingThreshold": 2500,
+      "needsImprovementThreshold": 4000,
+      "sampleSize": 5
+    },
+    "fid": {
+      "name": "FID",
+      "average": null,
+      "median": null,
+      "p75": null,
+      "min": null,
+      "max": null,
+      "score": 0,
+      "rating": "POOR",
+      "passingThreshold": 100,
+      "needsImprovementThreshold": 300
+    },
+    "cls": {
+      "name": "CLS",
+      "average": null,
+      "median": null,
+      "p75": null,
+      "min": null,
+      "max": null,
+      "score": 0,
+      "rating": "POOR",
+      "passingThreshold": 0.1,
+      "needsImprovementThreshold": 0.25
+    }
+  },
+  "overallScore": 31,
+  "recommendations": [
+    {
+      "metric": "CLS",
+      "priority": "MEDIUM",
+      "issue": "Cumulative Layout Shift is null (POOR)",
+      "solutions": [
+        "Set explicit dimensions for images and videos",
+        "Reserve space for dynamic content and ads",
+        "Use font-display: swap for web fonts",
+        "Avoid inserting content above existing content",
+        "Use transform animations instead of layout-changing properties"
+      ]
+    }
+  ],
+  "rawData": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-15T03:14:56.592Z",
+      "lcp": 2076.899999976158,
+      "fid": null,
+      "cls": null,
+      "performanceMetrics": {
+        "domContentLoaded": 0.10000002384185791,
+        "loadComplete": 0,
+        "firstContentfulPaint": 439.60000002384186,
+        "timeToInteractive": 663.3000000715256,
+        "totalBytes": 176996,
+        "domNodes": 640
+      },
+      "errors": []
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-10-15T03:15:08.485Z",
+      "lcp": 1487.2000000476837,
+      "fid": null,
+      "cls": null,
+      "performanceMetrics": {
+        "domContentLoaded": 0.20000004768371582,
+        "loadComplete": 0,
+        "firstContentfulPaint": 285.10000002384186,
+        "timeToInteractive": 668.8000000715256,
+        "totalBytes": 176996,
+        "domNodes": 640
+      },
+      "errors": []
+    },
+    {
+      "iteration": 3,
+      "timestamp": "2025-10-15T03:15:18.864Z",
+      "lcp": 979.8000000715256,
+      "fid": null,
+      "cls": null,
+      "performanceMetrics": {
+        "domContentLoaded": 0.10000002384185791,
+        "loadComplete": 0.5,
+        "firstContentfulPaint": 127,
+        "timeToInteractive": 233,
+        "totalBytes": 176996,
+        "domNodes": 640
+      },
+      "errors": []
+    },
+    {
+      "iteration": 4,
+      "timestamp": "2025-10-15T03:15:28.743Z",
+      "lcp": 1185,
+      "fid": null,
+      "cls": null,
+      "performanceMetrics": {
+        "domContentLoaded": 0.3999999761581421,
+        "loadComplete": 0,
+        "firstContentfulPaint": 106.19999992847443,
+        "timeToInteractive": 365,
+        "totalBytes": 176996,
+        "domNodes": 640
+      },
+      "errors": []
+    },
+    {
+      "iteration": 5,
+      "timestamp": "2025-10-15T03:15:38.626Z",
+      "lcp": 1081.6999999284744,
+      "fid": null,
+      "cls": null,
+      "performanceMetrics": {
+        "domContentLoaded": 0.10000002384185791,
+        "loadComplete": 0.10000002384185791,
+        "firstContentfulPaint": 127.39999997615814,
+        "timeToInteractive": 235.89999997615814,
+        "totalBytes": 176996,
+        "domNodes": 640
+      },
+      "errors": []
+    }
+  ]
+}

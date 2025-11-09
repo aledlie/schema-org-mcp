@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Test Report - Leora Home Health</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .score-section {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 2rem;
+        }
+
+        .overall-score {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .grade {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .status-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .badge.warning {
+            background: #ffd93d;
+            color: #333;
+        }
+
+        .badge.danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f0f0f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card-score {
+            font-size: 1.8rem;
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 10px;
+        }
+
+        .score-good {
+            background: #4caf50;
+            color: white;
+        }
+
+        .score-medium {
+            background: #ff9800;
+            color: white;
+        }
+
+        .score-poor {
+            background: #f44336;
+            color: white;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rating {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .rating-good {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .rating-needs-improvement {
+            background: #ffe0b2;
+            color: #e65100;
+        }
+
+        .rating-poor {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .recommendations {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .recommendations h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .recommendation-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .recommendation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .priority {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .priority-high {
+            background: #ff5252;
+            color: white;
+        }
+
+        .priority-medium {
+            background: #ffa726;
+            color: white;
+        }
+
+        .priority-critical {
+            background: #d32f2f;
+            color: white;
+        }
+
+        .recommendation-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+
+        .solutions {
+            margin-top: 1rem;
+        }
+
+        .solutions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .solutions li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .solutions li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .business-impact {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .business-impact h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .impact-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .impact-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .impact-label {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .stress-test-section {
+            background: #fff3e0;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stress-test-section h2 {
+            color: #e65100;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .breaking-point {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .breaking-point-value {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #d32f2f;
+            line-height: 1;
+        }
+
+        .breaking-point-label {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #f5f5f5;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .overall-score {
+                font-size: 3.5rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Performance Test Report</h1>
+            <p>Leora Home Health - Baseline Analysis</p>
+            <div class="meta-info">
+                <div class="meta-item">
+                    <strong>🌐 URL:</strong> https://www.leorahomehealth.com
+                </div>
+                <div class="meta-item">
+                    <strong>⏱️ Duration:</strong> 1h 1m 12s
+                </div>
+                <div class="meta-item">
+                    <strong>📅 Date:</strong> October 14, 2025
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="score-section">
+                <div class="overall-score">66</div>
+                <div class="score-label">Overall Performance Score</div>
+                <div class="grade">Grade: C+</div>
+                <div class="status-badges">
+                    <span class="badge warning">NEEDS IMPROVEMENT</span>
+                    <span class="badge danger">NOT PRODUCTION READY</span>
+                </div>
+            </div>
+
+            <h2 style="font-size: 2rem; margin: 2rem 0 1rem; color: #333;">📊 Test Suite Results</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Core Web Vitals</div>
+                        <div class="card-score score-poor">32</div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">LCP (Largest Contentful Paint)</span>
+                        <span class="metric-value">1006.76ms <span class="rating rating-good">GOOD</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">FID (First Input Delay)</span>
+                        <span class="metric-value">null <span class="rating rating-poor">POOR</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">CLS (Cumulative Layout Shift)</span>
+                        <span class="metric-value">null <span class="rating rating-poor">POOR</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Execution Time</span>
+                        <span class="metric-value">40s</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Beyond Core Web Vitals</div>
+                        <div class="card-score score-poor">17</div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">TTFB (Time to First Byte)</span>
+                        <span class="metric-value">365.6ms <span class="rating rating-needs-improvement">NEEDS IMPROVEMENT</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">FCP (First Contentful Paint)</span>
+                        <span class="metric-value">null <span class="rating rating-poor">POOR</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">TTI (Time to Interactive)</span>
+                        <span class="metric-value">null <span class="rating rating-poor">POOR</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Execution Time</span>
+                        <span class="metric-value">1s</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Load Testing</div>
+                        <div class="card-score score-good">100</div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Total Requests</span>
+                        <span class="metric-value">13,066</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Error Rate</span>
+                        <span class="metric-value">0% <span class="rating rating-good">PERFECT</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Avg Response Time</span>
+                        <span class="metric-value">254ms</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Execution Time</span>
+                        <span class="metric-value">5m 0s</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Stress Testing</div>
+                        <div class="card-score score-medium">75</div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Breaking Point</span>
+                        <span class="metric-value">180 users <span class="rating rating-needs-improvement">MODERATE</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Error Rate at Break</span>
+                        <span class="metric-value">91.61%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Response Time at Break</span>
+                        <span class="metric-value">112ms</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Execution Time</span>
+                        <span class="metric-value">19m 27s</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Scalability Testing</div>
+                        <div class="card-score score-good">105</div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Max Effective Users</span>
+                        <span class="metric-value">200 <span class="rating rating-good">EXCELLENT</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">User Scalability</span>
+                        <span class="metric-value"><span class="rating rating-good">PASSED</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Network Conditions</span>
+                        <span class="metric-value"><span class="rating rating-good">PASSED</span></span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Execution Time</span>
+                        <span class="metric-value">36m 1s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stress-test-section">
+                <h2>💥 Stress Test Analysis</h2>
+                <div class="breaking-point">
+                    <div class="breaking-point-value">180</div>
+                    <div class="breaking-point-label">Concurrent Users Breaking Point</div>
+                    <p style="margin-top: 1rem; color: #666;">The system experienced significant degradation at 180 concurrent users with a 91.61% error rate.</p>
+                </div>
+            </div>
+
+            <div class="business-impact">
+                <h2>💼 SEO & Business Impact</h2>
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <div class="impact-value">91/100</div>
+                        <div class="impact-label">Overall Score</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">95/100</div>
+                        <div class="impact-label">SEO Score</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">85/100</div>
+                        <div class="impact-label">LLM Score</div>
+                    </div>
+                    <div class="impact-card">
+                        <div class="impact-value">94/100</div>
+                        <div class="impact-label">Performance Score</div>
+                    </div>
+                </div>
+                <div style="margin-top: 2rem;">
+                    <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Projected Benefits:</h3>
+                    <div class="grid">
+                        <div class="impact-card">
+                            <div class="impact-value">+29%</div>
+                            <div class="impact-label">Traffic Increase</div>
+                        </div>
+                        <div class="impact-card">
+                            <div class="impact-value">+34%</div>
+                            <div class="impact-label">CTR Improvement</div>
+                        </div>
+                        <div class="impact-card">
+                            <div class="impact-value">21%</div>
+                            <div class="impact-label">Voice Search Capture</div>
+                        </div>
+                        <div class="impact-card">
+                            <div class="impact-value">Leader</div>
+                            <div class="impact-label">Brand Authority</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h2>⚡ Priority Recommendations</h2>
+
+                <div class="recommendation-item">
+                    <span class="priority priority-high">HIGH PRIORITY</span>
+                    <div class="recommendation-title">Improve Time to First Byte (TTFB)</div>
+                    <p style="margin: 0.5rem 0; color: #555;">Current: 365.6ms (NEEDS IMPROVEMENT)</p>
+                    <div class="solutions">
+                        <ul>
+                            <li>Optimize server-side processing and database queries</li>
+                            <li>Implement proper caching strategies (Redis, Memcached)</li>
+                            <li>Use a Content Delivery Network (CDN)</li>
+                            <li>Optimize DNS resolution with faster DNS providers</li>
+                            <li>Consider server-side rendering optimization</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recommendation-item">
+                    <span class="priority priority-high">HIGH PRIORITY</span>
+                    <div class="recommendation-title">Fix First Contentful Paint (FCP)</div>
+                    <p style="margin: 0.5rem 0; color: #555;">Current: null (POOR)</p>
+                    <div class="solutions">
+                        <ul>
+                            <li>Prioritize above-the-fold content loading</li>
+                            <li>Inline critical CSS and defer non-critical CSS</li>
+                            <li>Optimize web font loading with font-display: swap</li>
+                            <li>Minimize render-blocking resources</li>
+                            <li>Use resource hints (preload, prefetch, preconnect)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recommendation-item">
+                    <span class="priority priority-medium">MEDIUM PRIORITY</span>
+                    <div class="recommendation-title">Address Cumulative Layout Shift (CLS)</div>
+                    <p style="margin: 0.5rem 0; color: #555;">Current: null (POOR)</p>
+                    <div class="solutions">
+                        <ul>
+                            <li>Set explicit dimensions for images and videos</li>
+                            <li>Reserve space for dynamic content and ads</li>
+                            <li>Use font-display: swap for web fonts</li>
+                            <li>Avoid inserting content above existing content</li>
+                            <li>Use transform animations instead of layout-changing properties</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="recommendation-item">
+                    <span class="priority priority-medium">MEDIUM PRIORITY</span>
+                    <div class="recommendation-title">Improve Time to Interactive (TTI)</div>
+                    <p style="margin: 0.5rem 0; color: #555;">Current: null (POOR)</p>
+                    <div class="solutions">
+                        <ul>
+                            <li>Minimize main thread work with code splitting</li>
+                            <li>Remove unused JavaScript code</li>
+                            <li>Implement efficient event listeners</li>
+                            <li>Use web workers for heavy computations</li>
+                            <li>Optimize third-party script loading</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Performance Test Suite v1.0.0</strong></p>
+            <p>Generated on October 14, 2025 | Full JSON reports available in ./performance-reports/</p>
+        </div>
+    </div>
+</body>
+</html>

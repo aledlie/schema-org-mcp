@@ -1,0 +1,226 @@
+{
+  "testSuite": "Beyond Core Web Vitals",
+  "version": "1.0.0",
+  "status": "SUCCESS",
+  "timestamp": "2025-10-15T03:15:54.768Z",
+  "testConfig": {
+    "url": "https://www.austininspiredmovement.com/",
+    "iterations": 5,
+    "validMeasurements": 5
+  },
+  "extendedMetrics": {
+    "ttfb": {
+      "name": "TTFB",
+      "unit": "ms",
+      "average": 519.8,
+      "median": 454,
+      "p75": 726,
+      "min": 297,
+      "max": 804,
+      "score": 56,
+      "rating": "NEEDS_IMPROVEMENT",
+      "passingThreshold": 200,
+      "needsImprovementThreshold": 500,
+      "sampleSize": 5
+    },
+    "fcp": {
+      "name": "FCP",
+      "unit": "ms",
+      "average": null,
+      "median": null,
+      "p75": null,
+      "min": null,
+      "max": null,
+      "score": 0,
+      "rating": "POOR",
+      "passingThreshold": 1800,
+      "needsImprovementThreshold": 3000
+    },
+    "tti": {
+      "name": "TTI",
+      "unit": "ms",
+      "average": null,
+      "median": null,
+      "p75": null,
+      "min": null,
+      "max": null,
+      "score": 0,
+      "rating": "POOR",
+      "passingThreshold": 3800,
+      "needsImprovementThreshold": 7300
+    },
+    "tbt": {
+      "name": "TBT",
+      "unit": "ms",
+      "average": null,
+      "median": null,
+      "p75": null,
+      "min": null,
+      "max": null,
+      "score": 0,
+      "rating": "POOR",
+      "passingThreshold": 200,
+      "needsImprovementThreshold": 600
+    },
+    "si": {
+      "name": "SI",
+      "unit": "ms",
+      "average": null,
+      "median": null,
+      "p75": null,
+      "min": null,
+      "max": null,
+      "score": 0,
+      "rating": "POOR",
+      "passingThreshold": 3400,
+      "needsImprovementThreshold": 5800
+    }
+  },
+  "performanceInsights": {
+    "resourceAnalysis": {
+      "insights": [
+        "Request count is reasonable",
+        "Page size is within acceptable limits",
+        "Image request ratio is reasonable"
+      ]
+    },
+    "networkAnalysis": {
+      "bottlenecks": []
+    }
+  },
+  "overallScore": 11,
+  "recommendations": [
+    {
+      "metric": "TTFB",
+      "priority": "HIGH",
+      "issue": "Time to First Byte is 454ms (NEEDS_IMPROVEMENT)",
+      "solutions": [
+        "Optimize server-side processing and database queries",
+        "Implement proper caching strategies (Redis, Memcached)",
+        "Use a Content Delivery Network (CDN)",
+        "Optimize DNS resolution with faster DNS providers",
+        "Consider server-side rendering optimization"
+      ]
+    },
+    {
+      "metric": "FCP",
+      "priority": "HIGH",
+      "issue": "First Contentful Paint is nullms (POOR)",
+      "solutions": [
+        "Prioritize above-the-fold content loading",
+        "Inline critical CSS and defer non-critical CSS",
+        "Optimize web font loading with font-display: swap",
+        "Minimize render-blocking resources",
+        "Use resource hints (preload, prefetch, preconnect)"
+      ]
+    },
+    {
+      "metric": "TTI",
+      "priority": "MEDIUM",
+      "issue": "Time to Interactive is nullms (POOR)",
+      "solutions": [
+        "Minimize main thread work with code splitting",
+        "Remove unused JavaScript code",
+        "Implement efficient event listeners",
+        "Use web workers for heavy computations",
+        "Optimize third-party script loading"
+      ]
+    },
+    {
+      "metric": "TBT",
+      "priority": "MEDIUM",
+      "issue": "Total Blocking Time is nullms (POOR)",
+      "solutions": [
+        "Break up long-running tasks into smaller chunks",
+        "Use setTimeout or requestIdleCallback for non-critical work",
+        "Optimize JavaScript execution and parsing",
+        "Implement progressive enhancement",
+        "Consider using a service worker for background processing"
+      ]
+    },
+    {
+      "metric": "Speed Index",
+      "priority": "MEDIUM",
+      "issue": "Speed Index is nullms (POOR)",
+      "solutions": [
+        "Optimize the critical rendering path",
+        "Implement progressive image loading",
+        "Use skeleton screens or loading placeholders",
+        "Prioritize visible content loading",
+        "Minimize layout shifts during loading"
+      ]
+    }
+  ],
+  "rawData": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-10-15T03:15:51.643Z",
+      "ttfb": 804,
+      "fcp": null,
+      "tti": null,
+      "tbt": null,
+      "si": null,
+      "performanceDetails": null,
+      "resourceMetrics": null,
+      "errors": [
+        "page.waitForLoadState is not a function"
+      ]
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-10-15T03:15:52.640Z",
+      "ttfb": 454,
+      "fcp": null,
+      "tti": null,
+      "tbt": null,
+      "si": null,
+      "performanceDetails": null,
+      "resourceMetrics": null,
+      "errors": [
+        "page.waitForLoadState is not a function"
+      ]
+    },
+    {
+      "iteration": 3,
+      "timestamp": "2025-10-15T03:15:53.270Z",
+      "ttfb": 726,
+      "fcp": null,
+      "tti": null,
+      "tbt": null,
+      "si": null,
+      "performanceDetails": null,
+      "resourceMetrics": null,
+      "errors": [
+        "page.waitForLoadState is not a function"
+      ]
+    },
+    {
+      "iteration": 4,
+      "timestamp": "2025-10-15T03:15:54.088Z",
+      "ttfb": 297,
+      "fcp": null,
+      "tti": null,
+      "tbt": null,
+      "si": null,
+      "performanceDetails": null,
+      "resourceMetrics": null,
+      "errors": [
+        "page.waitForLoadState is not a function"
+      ]
+    },
+    {
+      "iteration": 5,
+      "timestamp": "2025-10-15T03:15:54.446Z",
+      "ttfb": 318,
+      "fcp": null,
+      "tti": null,
+      "tbt": null,
+      "si": null,
+      "performanceDetails": null,
+      "resourceMetrics": null,
+      "errors": [
+        "page.waitForLoadState is not a function"
+      ]
+    }
+  ]
+}
