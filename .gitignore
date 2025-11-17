@@ -8,6 +8,12 @@ dist/
 *.d.ts
 *.d.ts.map
 
+# Exclude JavaScript source files in specific directories (keep them)
+!src/**/*.js
+!tests/**/*.js
+!performance-suite/**/*.js
+!examples/**/*.js
+
 # IDE
 .vscode/
 .idea/
@@ -36,7 +42,24 @@ coverage/
 # TypeScript cache
 *.tsbuildinfo
 
-# Package lock files
-package-lock.json
+# Package lock files (keep root, ignore nested)
 yarn.lock
 pnpm-lock.yaml
+**/node_modules/package-lock.json
+performance-suite/package-lock.json
+
+# Repomix output files (all locations)
+repomix-output.xml
+**/repomix-output.xml
+
+# Auto-generated documentation
+**/README_ENHANCED.md
+
+# Performance reports (keep in performance-suite/performance-reports only)
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!jest.config.json
+!performance-suite/performance-reports/*.json
+!performance-suite/*.json

@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Reports (keep sample reports, ignore new ones)
+performance-reports/*.json
+!performance-reports/master-summary.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Repomix output
+repomix-output.xml
+
+# Auto-generated docs
+README_ENHANCED.md
